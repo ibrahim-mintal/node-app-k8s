@@ -63,7 +63,10 @@ This project demonstrates a basic Express.js server that responds with a greetin
 
 ## Access the Application
 
-- Via NodePort: Access at http://<node-ip>:30080
 - Via kubectl port-forward: `kubectl port-forward svc/node-app-service 3000:3000` then http://localhost:3000
+
+## Testing
+
+![Test Screenshot](test.png)
 
 Note: Update the image in app-deployment.yml to your built image.
