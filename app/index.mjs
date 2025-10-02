@@ -6,7 +6,7 @@ const PORT = 3000
 
 
 app.get("/", (req,res)=>{
-	const message=`Hello Ibrahim , I am Pod ${os.hostname()} from Kubernetes Cluster`
+	const message=`Hello Ibrahim , I am Pod ${os.hostname()} release v1.0.1`
 	res.send(message)
 
 })

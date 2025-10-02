@@ -17,7 +17,7 @@ This project demonstrates a basic Express.js server that responds with a greetin
 
 1. Navigate to the app directory:
    ```
-   cd app
+   cd app/
    ```
 
 2. Install dependencies:
@@ -36,13 +36,25 @@ This project demonstrates a basic Express.js server that responds with a greetin
 
 1. Build the Docker image:
    ```
-   docker build -t your-registry/node-app:latest app/
+   cd app/
+   docker build . -t your-registry/node-app:latest 
    ```
 
 2. Push to registry (replace with your registry):
    ```
    docker push your-registry/node-app:latest
    ```
+## Docker Push to Registry
+
+1. Docker Login
+```
+docker login
+```
+
+2. Push image to DockerHub
+```
+docker push your-registry/k8s-node-app:<Tag>
+```
 
 ## Kubernetes Deployment
 
@@ -55,18 +67,39 @@ This project demonstrates a basic Express.js server that responds with a greetin
    ```
    kubectl apply -f app-service.yml
    ```
-
-3. Check pods:
+   
+3. Test the service:
    ```
-   kubectl get pods
+   minikube service node-app-service
    ```
 
-## Access the Application
-
-- Via kubectl port-forward: `kubectl port-forward svc/node-app-service 3000:3000` then http://localhost:3000
+4. Access the Application:
+   ```
+   minikube ip
+   #192.168.49.2
+   curl http://192.168.49.2:30080
+   ```
 
 ## Testing
 
 ![Test Screenshot](test.png)
 
-Note: Update the image in app-deployment.yml to your built image.
+Note: Update the image tag in app-deployment.yml to your built image.
+
+## Apply Rolling Updates
+
+1. Update your App & Re-build your image with new tag
+2. Update Deployment:
+```
+kubectl set image deployment node-app-deployment node-app=ibrahimmintal/k8s-node-app:v1.0.1
+```
+3. Check Rollout Status:
+```
+kubectl rollout status deployment node-app-deployment
+```
+4. Test again
+```
+minikube service node-app-service
+curl http://192.168.49.2:30080
+```
+---   

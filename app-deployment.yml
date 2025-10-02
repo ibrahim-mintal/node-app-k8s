@@ -7,6 +7,11 @@ spec:
   selector:
     matchLabels:
       app: node-app
+  strategy:                 ## ====================================================
+    type: RollingUpdate     ## Added for rolling update strategy but it is default
+    rollingUpdate:          ## ====================================================
+      maxUnavailable: 1     ## max pods can be unavailable during update
+      maxSurge: 1           ## max pods can be created above desired pods
   template:
     metadata:
       labels:
